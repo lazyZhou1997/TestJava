@@ -2,23 +2,20 @@ public class TestJava {
 
     public static void main(String[] args) {
 
-        Child child = new Child();
-        child.doSomething();
+        Test test = new Test();
+        System.out.println(test.test(1));
+
     }
 
 }
 
-class Parent{
-    private Parent(){
+class Test {
 
-    }
-
-    
-}
-
-class Child extends Parent{
-
-    public void doSomething(){
-        System.out.println("In Child!");
+    public int test(int x) {
+        try {
+            return ++x;
+        } finally {
+            return 5;
+        }
     }
 }
