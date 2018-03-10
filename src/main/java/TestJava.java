@@ -4,7 +4,17 @@ public class TestJava {
     //Java多线程
     public static void main(String[] args) {
 
-        (new TestThread()).start();
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                for (int i = 0; i <1000 ; i++) {
+                    System.out.println("In Thread2");
+                }
+            }
+        }.start();
+
         for (int i = 0; i < 1000; i++) {
             System.out.println("In main Thread");
         }
@@ -12,13 +22,13 @@ public class TestJava {
     }
 }
 
-class TestThread extends Thread {
-
-    @Override
-    public void run() {
-        super.run();
-        for (int i = 0; i < 1000; i++) {
-            System.out.println("In Thread2");
-        }
-    }
-}
+//class TestThread extends Thread {
+//
+//    @Override
+//    public void run() {
+//        super.run();
+//        for (int i = 0; i < 1000; i++) {
+//            System.out.println("In Thread2");
+//        }
+//    }
+//}
