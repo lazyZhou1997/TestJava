@@ -5,15 +5,15 @@ public class TestJava {
     public static void main(String[] args) {
 
 
-        new Thread(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                super.run();
+
                 for (int i = 0; i <1000 ; i++) {
                     System.out.println("In Thread2");
                 }
             }
-        }.start();
+        }).start();
 
         for (int i = 0; i < 1000; i++) {
             System.out.println("In main Thread");
