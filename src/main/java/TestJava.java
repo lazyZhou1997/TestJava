@@ -1,21 +1,24 @@
 public class TestJava {
 
+
+    //Java多线程
     public static void main(String[] args) {
 
-        Test test = new Test();
-        System.out.println(test.test(1));
+        (new TestThread()).start();
+        for (int i = 0; i < 1000; i++) {
+            System.out.println("In main Thread");
+        }
 
     }
-
 }
 
-class Test {
+class TestThread extends Thread {
 
-    public int test(int x) {
-        try {
-            return ++x;
-        } finally {
-            return 5;
+    @Override
+    public void run() {
+        super.run();
+        for (int i = 0; i < 1000; i++) {
+            System.out.println("In Thread2");
         }
     }
 }
