@@ -1,34 +1,65 @@
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class TestJava {
 
 
-    //Java多线程
-    public static void main(String[] args) {
 
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                for (int i = 0; i <1000 ; i++) {
-                    System.out.println("In Thread2");
-                }
-            }
-        }).start();
-
-        for (int i = 0; i < 1000; i++) {
-            System.out.println("In main Thread");
-        }
-
-    }
-}
-
-//class TestThread extends Thread {
+//    private static int i = 0;
 //
-//    @Override
-//    public void run() {
-//        super.run();
-//        for (int i = 0; i < 1000; i++) {
-//            System.out.println("In Thread2");
+//    //Java多线程
+//    public static void main(String[] args) {
+//
+//        new Thread(new Thread1()).start();
+//
+//        try {
+//            //确保Thread1执行到wait()
+//            Thread.sleep(10);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        new Thread(new Thread2()).start();
+//
+//    }
+//
+//
+//    private static class Thread1 implements Runnable{
+//        @Override
+//        public void run() {
+//
+//            synchronized (TestJava.class){
+//                System.out.println("enter thread1");
+//
+//                System.out.println("thread1 is waiting");
+//
+//                try {
+//                    //释放锁有两种方式，第一种方式是程序自然离开监视器的范围，也就是离开了
+//                    //synchronized关键字管辖的代码范围，另一种方式就是在synchronized关键字管辖的代码 内部调用监视器对象的wait方法。这里，使用wait方法释放锁
+//                    TestJava.class.wait();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                System.out.println("Thread1 is going on.");
+//
+//                System.out.println("Thread1 is being over.");
+//            }
 //        }
 //    }
-//}
+//
+//    private static class Thread2 implements Runnable{
+//        @Override
+//        public void run() {
+//
+//            synchronized (TestJava.class){
+//                System.out.println("enter Thread2.");
+//
+//                System.out.println();
+//            }
+//        }
+//    }
+
+}
+
+
