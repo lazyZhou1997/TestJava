@@ -1,35 +1,31 @@
 package edu.scu;
 
-import java.io.FileNotFoundException;
 
 /**
- * 测试子类覆盖父类的方法时，只能比父类抛出更少的checked异常，或者是抛出父类抛出的异常的子异常
+ * 测试volatile关键字不保证操作的原子性
  */
 public class TestJava {
+    public volatile int inc = 0;
 
-    public static void main(String[] args) throws FileNotFoundException {
-
-        Parent son = new Son();
-        son.method();
-    }
-}
-
-/**
- * 父类
- */
-class Parent {
-    public void method() throws FileNotFoundException {
-
-    }
-}
-
-/**
- * 子类
- */
-class Son extends Parent {
-
-    public void method() throws Exception{
-        System.out.println("something!");
+    public void increase() {
+        inc++;
     }
 
+    public static void main(String[] args) throws InterruptedException {
+
+
+        final TestJava test = new TestJava();
+        for(int i=0;i<10;i++){
+            new Thread(){
+                public void run() {
+                    for(int j=0;j<1000;j++)
+                        test.increase();
+                };
+            }.start();
+        }
+
+        //保证其他线程已经执行完毕
+        Thread.sleep(10000);
+        System.out.println(test.inc);
+    }
 }
