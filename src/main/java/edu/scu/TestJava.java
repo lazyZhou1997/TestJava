@@ -1,32 +1,41 @@
 package edu.scu;
 
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 /**
- * 简单的测试和使用HashMap，通过此方法效率高于先取key，再通过key取value得方法
+ * 学习泛型，基础的泛型方法
  */
 public class TestJava {
 
     public static void main(String[] args) {
 
-        HashMap hashMap = new HashMap();
+        //创建不同类型的数组：Integer，Double 和 Character
+        Integer[] intArray = {1,2,3,4,5};
+        Double[] doubleArray = {1.1,2.2,3.3,4.4};
+        Character[] characterArray = {'H','E','L','L','O'};
 
-        hashMap.put("1",new Integer(1));
-        hashMap.put("2",(Integer)2);
-        hashMap.put("3","2");
+        TestJava testJava = new TestJava();
+
+        testJava.printArray(intArray);
+        testJava.printArray(doubleArray);
+        testJava.printArray(characterArray);
 
 
-        Iterator iterator = hashMap.entrySet().iterator();
-
-        while (iterator.hasNext()){
-
-            System.out.println(((Map.Entry)(iterator.next())).getValue());
-
-            //测试不通过迭代器修改是否会抛出异常
-            //hashMap.remove("1");
-        }
     }
+
+    /**
+     * 测试泛型数组
+     * @param inputArray
+     * @param <T>
+     */
+    public <T> void printArray(T[] inputArray){
+
+        //输出数组中的元素
+        for (T t:
+             inputArray) {
+            System.out.print(t);
+        }
+
+        System.out.println();
+    }
+
 }
