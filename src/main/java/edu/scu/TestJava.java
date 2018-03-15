@@ -1,31 +1,32 @@
 package edu.scu;
 
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 /**
- * 测试volatile关键字不保证操作的原子性
+ * 简单的测试和使用HashMap，通过此方法效率高于先取key，再通过key取value得方法
  */
 public class TestJava {
-    public volatile int inc = 0;
 
-    public void increase() {
-        inc++;
-    }
+    public static void main(String[] args) {
 
-    public static void main(String[] args) throws InterruptedException {
+        HashMap hashMap = new HashMap();
+
+        hashMap.put("1",new Integer(1));
+        hashMap.put("2",(Integer)2);
+        hashMap.put("3","2");
 
 
-        final TestJava test = new TestJava();
-        for(int i=0;i<10;i++){
-            new Thread(){
-                public void run() {
-                    for(int j=0;j<1000;j++)
-                        test.increase();
-                };
-            }.start();
+        Iterator iterator = hashMap.entrySet().iterator();
+
+        while (iterator.hasNext()){
+
+            System.out.println(((Map.Entry)(iterator.next())).getValue());
+
+            //测试不通过迭代器修改是否会抛出异常
+            //hashMap.remove("1");
         }
-
-        //保证其他线程已经执行完毕
-        Thread.sleep(10000);
-        System.out.println(test.inc);
     }
 }
