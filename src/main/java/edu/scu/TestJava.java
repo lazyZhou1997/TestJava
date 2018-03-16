@@ -2,46 +2,109 @@ package edu.scu;
 
 
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
- * 学习反射加载类对象，反射获取父类和接口类对象
+ * 通过反射机制实例化一个类对象
  */
-public class TestJava implements Serializable{
-
-    public static void main(String[] args) throws ClassNotFoundException {
-
-        //获取Class对象的三种方式
-        Class clazz1 = null;
-        Class clazz2 = null;
-        Class clazz3 = null;
-
-        //通过完全类名进行加载，最常使用
-        clazz1 = Class.forName("edu.scu.TestJava");
-        clazz2 = new TestJava().getClass();
-        clazz3 = TestJava.class;
+public class TestJava implements Serializable {
 
 
-        System.out.println(clazz1.getName());
-        System.out.println(clazz2.getName());
-        System.out.println(clazz3.getName());
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
 
-        System.out.println("==============获取父类和接口===============");
-        //获取父类
-        Class parentClazz = clazz1.getSuperclass();
-        System.out.println("父类为:" + parentClazz.getName());
+        Class clazz = null;
 
-        //获取所有接口
-        Class[] interfaces = clazz1.getInterfaces();
-        System.out.println("实现的接口有：");
+        clazz = Class.forName("edu.scu.User");
 
-        for (Class clazz:
-             interfaces) {
+        //调用默认构造方法实例化，再调用set方法赋值，如果没有默认的构造方法就会抛出异常
+        User user = (User) clazz.newInstance();
+        user.setAge(18);
+        user.setName("Piter");
+        System.out.println(user);
 
-            System.out.println(clazz.getName());
+        //第二种方法，取得构造方法后利用构造方法赋值
+        Class[] types;
+        Constructor[] constructors = clazz.getConstructors();
+        for (Constructor consturctor :
+                constructors) {
+
+            types = consturctor.getParameterTypes();
+
+            System.out.println("con(");
+
+            for (Class type :
+                    types) {
+
+                System.out.println(type.getName());
+            }
+
+            System.out.println(")");
+
         }
 
+        //构造方法的索引位置与声明时的相对位置有关
+        //通过构造方法1赋值
+        user = null;
+        user = (User) constructors[1].newInstance("hah");
+        System.out.println(user);
 
-        System.out.println("==============实例化对象===============");
+        //通过构造方法2赋值
+        user = null;
+        user = (User) constructors[0].newInstance(10,"heihei1");
+        System.out.println(user);//通过构造方法2赋值
 
+        //通过构造方法3赋值
+        user = null;
+        user = (User) constructors[2].newInstance();
+        System.out.println(user);
+
+
+
+    }
+
+}
+
+class User {
+
+    private int age;
+
+    private String name;
+
+    public User() {
+        System.out.println("默认构造方法！");
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public User(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
